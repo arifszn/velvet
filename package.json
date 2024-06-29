@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "build": "tsc",
-    "start:dev": "nodemon src/index.ts --legacy-watch",
-    "start:prod": "node dist/index.js",
+    "start:dev": "ts-node-dev src/index.ts",
+    "start:prod": "tsc && node dist/index.js",
     "migration:generate": "ts-node node_modules/.bin/typeorm migration:generate -d src/configs/dataSource.ts src/migrations/$npm_config_name",
     "migration:run": "ts-node node_modules/.bin/typeorm migration:run -d src/configs/dataSource",
     "migration:revert": "ts-node node_modules/.bin/typeorm migration:revert -d src/configs/dataSource",
@@ -32,7 +32,6 @@
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "helmet": "^7.1.0",
@@ -57,9 +56,9 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }
 }
