@@ -6,6 +6,8 @@ import helmet from 'helmet';
 import cors from 'cors';
 import AppDataSource from './configs/dataSource';
 import { bootstrapCronJob } from './utils/cronJob.utils';
+import swaggerUi from 'swagger-ui-express';
+import apidoc from './apidoc.json';
 
 dotenv.config();
 
@@ -21,6 +23,18 @@ app.use(
   }),
 );
 app.use('/api', routes);
+
+if (process.env.DISPLAY_SWAGGER === 'true') {
+  app.use(
+    '/swagger',
+    swaggerUi.serve,
+    swaggerUi.setup(apidoc, {
+      persistAuthorization: true,
+      displayOperationId: true,
+      filter: true,
+    }),
+  );
+}
 
 async function startServer() {
   try {
@@ -42,18 +56,18 @@ async function startServer() {
     process.on('SIGINT', shutdown);
     process.on('SIGTERM', shutdown);
   } catch (error) {
-    console.error('Error starting server:', error);
+    console.error('[server]: Error starting server:', error);
     process.exit(1);
   }
 }
 
 async function shutdown() {
   try {
-    console.log('Shutting down gracefully...');
-    console.log('Server has shut down.');
+    console.log('[server]: Shutting down gracefully...');
+    console.log('[server]: Server has shut down.');
     process.exit(0);
   } catch (error) {
-    console.error('Error during shutdown:', error);
+    console.error('[server]: Error during shutdown:', error);
     process.exit(1);
   }
 }
