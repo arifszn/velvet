@@ -1,0 +1,52 @@
+version: "3.7"
+
+networks:
+  res-net:
+    external: true
+
+services:
+  app:
+    build:
+      context: ./
+      args:
+        - PORT=${PORT}
+    ports:
+      - ${PORT}:${PORT}
+    command: npm run start:dev
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mysql
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - NODE_ENV=development
+
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    ports:
+        - '${DB_PORT:-3306}:3306'
+    environment:
+        MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-password}'
+        MYSQL_DATABASE: '${DB_DATABASE:-velvet}'
+        MYSQL_USER: '${DB_USERNAME:-velvet}'
+        MYSQL_PASSWORD: '${DB_PASSWORD:-password}'
+        MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+        - 'mysql:/var/lib/mysql'
+    healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD:-password}"]
+        retries: 3
+        timeout: 5s
+
+  adminer:
+    image: 'adminer'
+    ports:
+        - '${ADMINER_PORT:-8080}:8080'
+        
+volumes:
+  mysql:
+    driver: local

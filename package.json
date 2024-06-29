@@ -1,0 +1,64 @@
+{
+  "name": "velvet",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "start:dev": "nodemon src/index.ts",
+    "start:prod": "node dist/index.js",
+    "migration:generate": "ts-node node_modules/.bin/typeorm migration:generate -d src/configs/dataSource.ts src/migrations/$npm_config_name",
+    "migration:run": "ts-node node_modules/.bin/typeorm migration:run -d src/configs/dataSource",
+    "migration:revert": "ts-node node_modules/.bin/typeorm migration:revert -d src/configs/dataSource",
+    "lint": "eslint \"./**/*.{js,jsx,ts,tsx}\" --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint \"./**/*.{js,jsx,ts,tsx}\" --fix --report-unused-disable-directives --max-warnings 0",
+    "prettier": "prettier --check \"./**/*.{js,jsx,ts,tsx,css,md,json}\"",
+    "prettier:fix": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arifszn/velvet.git"
+  },
+  "author": "arifszn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arifszn/velvet/issues"
+  },
+  "homepage": "https://github.com/arifszn/velvet#readme",
+  "dependencies": {
+    "@langchain/anthropic": "^0.1.21",
+    "@langchain/community": "^0.2.2",
+    "@langchain/google-genai": "^0.0.16",
+    "@langchain/openai": "^0.0.33",
+    "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "imap": "^0.8.19",
+    "jsonwebtoken": "^9.0.2",
+    "langchain": "^0.2.1",
+    "mailparser": "^3.7.1",
+    "mysql2": "^3.9.7",
+    "node-cron": "^3.0.3",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/parser": "^7.10.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
