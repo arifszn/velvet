@@ -23,6 +23,9 @@ app.use(
   }),
 );
 app.use('/api', routes);
+app.get('/', (req, res) => {
+  res.json({ status: 'OK' });
+});
 
 if (process.env.DISPLAY_SWAGGER === 'true') {
   app.use(
