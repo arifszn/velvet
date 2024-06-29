@@ -6,15 +6,14 @@ import helmet from 'helmet';
 import cors from 'cors';
 import AppDataSource from './configs/dataSource';
 import { bootstrapCronJob } from './utils/cronJob.utils';
-import swaggerUi from 'swagger-ui-express';
-import apidoc from './apidoc.json';
+import { setupDocRoutes } from './routes/doc.route';
+import { CSP_CONFIG } from './constants/CSP.constants';
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
-
-app.use(helmet());
+app.use(helmet(CSP_CONFIG));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -27,17 +26,7 @@ app.get('/', (req, res) => {
   res.json({ status: 'OK' });
 });
 
-if (process.env.DISPLAY_SWAGGER === 'true') {
-  app.use(
-    '/swagger',
-    swaggerUi.serve,
-    swaggerUi.setup(apidoc, {
-      persistAuthorization: true,
-      displayOperationId: true,
-      filter: true,
-    }),
-  );
-}
+setupDocRoutes(app);
 
 async function startServer() {
   try {
