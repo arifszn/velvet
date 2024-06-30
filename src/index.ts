@@ -7,7 +7,7 @@ import cors from 'cors';
 import AppDataSource from './configs/dataSource';
 import { bootstrapCronJob } from './utils/cronJob.utils';
 import { setupDocRoutes } from './routes/doc.route';
-import { CSP_CONFIG } from './constants/CSP.constants';
+import { CSP_CONFIG } from './constants/CSP.constant';
 
 dotenv.config();
 

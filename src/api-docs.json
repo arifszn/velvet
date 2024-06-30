@@ -4,9 +4,16 @@
     "title": "Velvet",
     "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local"
+    }
+  ],
   "paths": {
-    "/register": {
+    "/api/register": {
       "post": {
+        "tags": ["Auth"],
         "summary": "Register a new user",
         "operationId": "registerUser",
         "requestBody": {
@@ -20,8 +27,9 @@
                 "newUser": {
                   "summary": "New User",
                   "value": {
-                    "email": "user@example.com",
-                    "password": "password123"
+                    "name": "Eve Holt",
+                    "email": "eve.holt@reqres.in",
+                    "password": "123456"
                   }
                 }
               }
@@ -87,8 +95,8 @@
                 "existingUser": {
                   "summary": "Existing User",
                   "value": {
-                    "email": "user@example.com",
-                    "password": "password123"
+                    "email": "eve.holt@reqres.in",
+                    "password": "123456"
                   }
                 }
               }
@@ -335,7 +343,10 @@
                   "type": "string"
                 },
                 "path": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }

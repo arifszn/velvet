@@ -10,6 +10,10 @@ import {
 } from '../dtos/auth.dto';
 import { AuthService } from '../services/auth.service';
 import { UnauthorizedException } from '../exceptions/UnauthorizedException';
+import {
+  INTERNAL_SERVER_ERROR_MESSAGE,
+  UNAUTHORIZED_ERROR_MESSAGE,
+} from '../constants/message.constant';
 
 export class AuthController {
   private readonly authService: AuthService;
@@ -37,13 +41,13 @@ export class AuthController {
         });
       } else if (error instanceof UniqueConstraintViolationException) {
         res.status(409).json({
-          message: 'Resource already exists',
+          message: error?.message,
         });
       } else {
         console.error(error);
         res
           .status(500)
-          .json({ message: error?.message || 'Internal Server Error' });
+          .json({ message: error?.message || INTERNAL_SERVER_ERROR_MESSAGE });
       }
     }
   }
@@ -67,13 +71,13 @@ export class AuthController {
         });
       } else if (error instanceof UnauthorizedException) {
         res.status(401).json({
-          message: error?.message || 'Unauthorized',
+          message: error?.message || UNAUTHORIZED_ERROR_MESSAGE,
         });
       } else {
         console.error(error);
         res
           .status(500)
-          .json({ message: error?.message || 'Internal Server Error' });
+          .json({ message: error?.message || INTERNAL_SERVER_ERROR_MESSAGE });
       }
     }
   }
@@ -96,13 +100,13 @@ export class AuthController {
         });
       } else if (error instanceof UnauthorizedException) {
         res.status(401).json({
-          message: error?.message || 'Unauthorized',
+          message: error?.message || UNAUTHORIZED_ERROR_MESSAGE,
         });
       } else {
         console.error(error);
         res
           .status(500)
-          .json({ message: error?.message || 'Internal Server Error' });
+          .json({ message: error?.message || INTERNAL_SERVER_ERROR_MESSAGE });
       }
     }
   }

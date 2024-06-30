@@ -1,6 +1,6 @@
 import { User } from '../entities/user.entity';
 import { UserRepository } from '../repositories/user.repository';
-import { isUniqueConstraintViolationError } from '../utils/dbErrorHelper.utils';
+import { getUniqueConstraintViolationColumn } from '../utils/dbErrorHelper.utils';
 import { UniqueConstraintViolationException } from '../exceptions/UniqueConstraintViolationException';
 import { LoginInput, RefreshTokenInput, RegisterInput } from '../dtos/auth.dto';
 import jwt from 'jsonwebtoken';
@@ -9,8 +9,12 @@ import { UserStatus } from '../constants/userStatus.constant';
 import {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
-} from '../constants/jwt.constants';
+} from '../constants/jwt.constant';
 import { AuthJwtPayload } from '../interfaces/authJwtPayload.interface';
+import {
+  INVALID_CREDENTIALS_ERROR_MESSAGE,
+  INVALID_REFRESH_TOKEN_ERROR_MESSAGE,
+} from '../constants/message.constant';
 
 export class AuthService {
   private readonly userRepository: UserRepository;
@@ -31,8 +35,11 @@ export class AuthService {
         refreshToken: this.generateRefreshToken(user),
       };
     } catch (error) {
-      if (isUniqueConstraintViolationError(error)) {
-        throw new UniqueConstraintViolationException();
+      const uniqueConstraintKey = getUniqueConstraintViolationColumn(error);
+      if (uniqueConstraintKey) {
+        throw new UniqueConstraintViolationException(
+          `The ${uniqueConstraintKey} already exists`,
+        );
       }
       throw error;
     }
@@ -46,7 +53,7 @@ export class AuthService {
       where: { email: data.email, status: UserStatus.ACTIVE },
     });
     if (!user || !(await user.validatePassword(data.password))) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException(INVALID_CREDENTIALS_ERROR_MESSAGE);
     }
     return {
       accessToken: this.generateAccessToken(user),
@@ -65,12 +72,12 @@ export class AuthService {
         where: { id: payload.id, status: UserStatus.ACTIVE },
       });
       if (!user) {
-        throw new UnauthorizedException('Invalid refresh token');
+        throw new UnauthorizedException(INVALID_REFRESH_TOKEN_ERROR_MESSAGE);
       }
       return this.generateAccessToken(user);
     } catch (error) {
       throw new UnauthorizedException(
-        error?.message || 'Invalid refresh token',
+        error?.message || INVALID_REFRESH_TOKEN_ERROR_MESSAGE,
       );
     }
   }

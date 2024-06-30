@@ -32,9 +32,6 @@ export class UserOutput {
   @Expose()
   email: string;
 
-  @Expose({ name: 'avatarUrl' })
-  avatar_url: string;
-
   static fromEntity(user: User): UserOutput {
     return plainToInstance(UserOutput, user, {
       excludeExtraneousValues: true,

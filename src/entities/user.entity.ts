@@ -9,9 +9,12 @@ import {
 } from 'typeorm';
 import { UserStatus } from '../constants/userStatus.constant';
 import { compare, hash } from 'bcryptjs';
+import { UNIQUE_CONSTRAINT } from '../constants/uniqueConstraint.constant';
 
 @Entity('users')
-@Unique(['email'])
+@Unique(UNIQUE_CONSTRAINT.USERS_EMAIL.indexName, [
+  UNIQUE_CONSTRAINT.USERS_EMAIL.columnName,
+])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -30,9 +33,6 @@ export class User {
 
   @Column({ default: UserStatus.ACTIVE })
   status: string;
-
-  @Column({ nullable: true })
-  avatarUrl: string;
 
   @CreateDateColumn()
   createdAt: Date;

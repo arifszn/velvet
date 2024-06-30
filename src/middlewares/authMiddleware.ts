@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { ACCESS_TOKEN_SECRET } from '../constants/jwt.constants';
+import { ACCESS_TOKEN_SECRET } from '../constants/jwt.constant';
 import { AuthJwtPayload } from '../interfaces/authJwtPayload.interface';
 import { AuthRequest } from '../interfaces/authRequest.interface';
 import { UserService } from '../services/user.service';
