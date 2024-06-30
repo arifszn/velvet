@@ -5,6 +5,7 @@ import { AuthJwtPayload } from '../interfaces/authJwtPayload.interface';
 import { AuthRequest } from '../interfaces/authRequest.interface';
 import { UserService } from '../services/user.service';
 import { UserStatus } from '../constants/userStatus.constant';
+import { ErrorMessages } from '../constants/message.constant';
 
 const userService = new UserService();
 
@@ -19,7 +20,7 @@ export const authenticateUser = async (
   if (!token) {
     return res
       .status(401)
-      .json({ message: 'Access token is missing or invalid' });
+      .json({ message: ErrorMessages.InvalidOrMissingAccessToken });
   }
 
   try {
@@ -28,16 +29,16 @@ export const authenticateUser = async (
     const user = await userService.getById(payload.id);
 
     if (!user) {
-      return res.status(401).json({ message: 'User not found' });
+      return res.status(401).json({ message: ErrorMessages.UserNotFound });
     }
 
     if (user.status !== UserStatus.ACTIVE) {
-      return res.status(403).json({ message: 'User is not active' });
+      return res.status(403).json({ message: ErrorMessages.UserInactive });
     }
 
     req.user = user;
     next();
   } catch (err) {
-    return res.status(401).json({ message: 'Invalid access token' });
+    return res.status(401).json({ message: ErrorMessages.InvalidAccessToken });
   }
 };

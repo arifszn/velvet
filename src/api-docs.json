@@ -80,8 +80,9 @@
         }
       }
     },
-    "/login": {
+    "/api/login": {
       "post": {
+        "tags": ["Auth"],
         "summary": "Login an existing user",
         "operationId": "loginUser",
         "requestBody": {
@@ -147,7 +148,8 @@
         }
       }
     },
-    "/refresh-token": {
+    "/api/refresh-token": {
+      "tags": ["Auth"],
       "post": {
         "summary": "Refresh access token",
         "operationId": "refreshToken",
@@ -213,7 +215,8 @@
         }
       }
     },
-    "/me": {
+    "/api/me": {
+      "tags": ["User"],
       "get": {
         "summary": "Get current user",
         "operationId": "getCurrentUser",

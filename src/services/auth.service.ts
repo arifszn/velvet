@@ -11,10 +11,7 @@ import {
   REFRESH_TOKEN_SECRET,
 } from '../constants/jwt.constant';
 import { AuthJwtPayload } from '../interfaces/authJwtPayload.interface';
-import {
-  INVALID_CREDENTIALS_ERROR_MESSAGE,
-  INVALID_REFRESH_TOKEN_ERROR_MESSAGE,
-} from '../constants/message.constant';
+import { ErrorMessages } from '../constants/message.constant';
 
 export class AuthService {
   private readonly userRepository: UserRepository;
@@ -53,7 +50,7 @@ export class AuthService {
       where: { email: data.email, status: UserStatus.ACTIVE },
     });
     if (!user || !(await user.validatePassword(data.password))) {
-      throw new UnauthorizedException(INVALID_CREDENTIALS_ERROR_MESSAGE);
+      throw new UnauthorizedException(ErrorMessages.InvalidCredentials);
     }
     return {
       accessToken: this.generateAccessToken(user),
@@ -72,12 +69,12 @@ export class AuthService {
         where: { id: payload.id, status: UserStatus.ACTIVE },
       });
       if (!user) {
-        throw new UnauthorizedException(INVALID_REFRESH_TOKEN_ERROR_MESSAGE);
+        throw new UnauthorizedException(ErrorMessages.InvalidRefreshToken);
       }
       return this.generateAccessToken(user);
     } catch (error) {
       throw new UnauthorizedException(
-        error?.message || INVALID_REFRESH_TOKEN_ERROR_MESSAGE,
+        error?.message || ErrorMessages.InvalidRefreshToken,
       );
     }
   }
