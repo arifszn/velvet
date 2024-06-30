@@ -1,8 +1,8 @@
 import { CreateUserInput, UpdateUserInput } from '../dtos/user.dto';
 import { User } from '../entities/user.entity';
 import { UserRepository } from '../repositories/user.repository';
-import { isUniqueConstraintViolationError } from '../utils/dbErrorHelper.utils';
 import { UniqueConstraintViolationException } from '../exceptions/UniqueConstraintViolationException';
+import { getUniqueConstraintViolationColumn } from '../utils/dbErrorHelper.utils';
 
 export class UserService {
   private readonly userRepository: UserRepository;
@@ -38,8 +38,11 @@ export class UserService {
       const user = this.userRepository.create(createUserInput);
       return this.userRepository.save(user);
     } catch (error) {
-      if (isUniqueConstraintViolationError(error)) {
-        throw new UniqueConstraintViolationException();
+      const uniqueConstraintKey = getUniqueConstraintViolationColumn(error);
+      if (uniqueConstraintKey) {
+        throw new UniqueConstraintViolationException(
+          `The ${uniqueConstraintKey} already exists`,
+        );
       }
       throw error;
     }
