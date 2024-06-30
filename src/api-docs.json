@@ -149,8 +149,8 @@
       }
     },
     "/api/refresh-token": {
-      "tags": ["Auth"],
       "post": {
+        "tags": ["Auth"],
         "summary": "Refresh access token",
         "operationId": "refreshToken",
         "requestBody": {
@@ -215,9 +215,9 @@
         }
       }
     },
-    "/api/me": {
-      "tags": ["User"],
+    "/api/users/me": {
       "get": {
+        "tags": ["User"],
         "summary": "Get current user",
         "operationId": "getCurrentUser",
         "security": [
@@ -258,6 +258,324 @@
           }
         }
       }
+    },
+    "/api/users": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get paginated users",
+        "operationId": "getPaginatedUsers",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "search_query",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status[]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["ACTIVE", "INACTIVE"]
+              },
+              "example": ["ACTIVE", "INACTIVE"]
+            },
+            "style": "form",
+            "explode": true
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["ASC", "DESC"],
+              "default": "DESC"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["status", "createdAt", "name"],
+              "default": "createdAt"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedUserOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Create a new user",
+        "operationId": "createUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserInput"
+              },
+              "examples": {
+                "newUser": {
+                  "summary": "New User",
+                  "value": {
+                    "name": "Eve Holt",
+                    "email": "eve.holt@reqres.in",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Resource already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Update a user",
+        "operationId": "updateUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserInput"
+              },
+              "examples": {
+                "updateUser": {
+                  "summary": "Update User",
+                  "value": {
+                    "name": "Eve Holt",
+                    "email": "eve.holt@reqres.in",
+                    "status": "ACTIVE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete a user",
+        "operationId": "deleteUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -265,27 +583,26 @@
       "RegisterInput": {
         "type": "object",
         "properties": {
+          "name": {
+            "type": "string"
+          },
           "email": {
-            "type": "string",
-            "format": "email"
+            "type": "string"
           },
           "password": {
-            "type": "string",
-            "format": "password"
+            "type": "string"
           }
         },
-        "required": ["email", "password"]
+        "required": ["name", "email", "password"]
       },
       "LoginInput": {
         "type": "object",
         "properties": {
           "email": {
-            "type": "string",
-            "format": "email"
+            "type": "string"
           },
           "password": {
-            "type": "string",
-            "format": "password"
+            "type": "string"
           }
         },
         "required": ["email", "password"]
@@ -302,10 +619,10 @@
       "AuthTokenOutput": {
         "type": "object",
         "properties": {
-          "accessToken": {
+          "access_token": {
             "type": "string"
           },
-          "refreshToken": {
+          "refresh_token": {
             "type": "string"
           }
         }
@@ -313,7 +630,7 @@
       "AccessTokenOutput": {
         "type": "object",
         "properties": {
-          "accessToken": {
+          "access_token": {
             "type": "string"
           }
         }
@@ -324,32 +641,93 @@
           "id": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "email": {
-            "type": "string",
-            "format": "email"
+            "type": "string"
           },
           "status": {
             "type": "string",
             "enum": ["ACTIVE", "INACTIVE"]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CreateUserInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "email", "password"]
+      },
+      "UpdateUserInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["ACTIVE", "INACTIVE"]
+          }
+        },
+        "required": ["name", "email", "status"]
+      },
+      "PaginatedUserOutput": {
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "limit": {
+            "type": "integer"
           }
         }
       },
       "ValidationError": {
         "type": "object",
         "properties": {
-          "errors": {
+          "message": {
+            "type": "string"
+          },
+          "details": {
             "type": "array",
             "items": {
               "type": "object",
               "properties": {
-                "message": {
+                "field": {
                   "type": "string"
                 },
-                "path": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+                "error": {
+                  "type": "string"
                 }
               }
             }

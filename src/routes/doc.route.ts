@@ -9,9 +9,11 @@ export function setupDocRoutes(app: Express) {
       '/swagger',
       swaggerUi.serve,
       swaggerUi.setup(apiDocs, {
-        persistAuthorization: true,
-        displayOperationId: true,
-        filter: true,
+        swaggerOptions: {
+          persistAuthorization: true,
+          displayOperationId: false,
+          filter: true,
+        },
       }),
     );
   }

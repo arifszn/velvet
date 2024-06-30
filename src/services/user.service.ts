@@ -11,32 +11,57 @@ export class UserService {
     this.userRepository = new UserRepository();
   }
 
-  public async getAll(): Promise<User[]> {
+  public async getAllUsers(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  public async getPaginated(
+  public async getPaginatedUsers(
     page: number,
     limit: number,
+    sortBy: string = 'createdAt',
+    sortOrder: 'ASC' | 'DESC' = 'DESC',
+    searchQuery?: string,
+    status?: string[],
   ): Promise<{ users: User[]; count: number }> {
-    const [users, count] = await this.userRepository.findAndCount({
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+    const queryBuilder = this.userRepository.createQueryBuilder('users');
+
+    if (searchQuery) {
+      queryBuilder.andWhere('users.email LIKE :searchQuery', {
+        searchQuery: `%${searchQuery}%`,
+      });
+      queryBuilder.andWhere('users.name LIKE :searchQuery', {
+        searchQuery: `%${searchQuery}%`,
+      });
+    }
+
+    if (status && status.length > 0) {
+      queryBuilder.andWhere('users.status IN (:...status)', { status });
+    }
+
+    queryBuilder
+      .orderBy(`users.${sortBy}`, sortOrder)
+      .skip((page - 1) * limit)
+      .take(limit);
+
+    const [users, count] = await queryBuilder.getManyAndCount();
 
     return { users, count };
   }
 
-  public async getById(id: number): Promise<User | undefined> {
+  public async getUserById(id: number): Promise<User | undefined> {
     return await this.userRepository.findOneBy({
       id,
     });
   }
 
-  public async create(createUserInput: CreateUserInput): Promise<User> {
+  public async createUser(createUserInput: CreateUserInput): Promise<User> {
     try {
-      const user = this.userRepository.create(createUserInput);
-      return this.userRepository.save(user);
+      const user = this.userRepository.create({
+        name: createUserInput.name,
+        email: createUserInput.email,
+        password: createUserInput.password,
+      });
+      return await this.userRepository.save(user);
     } catch (error) {
       const uniqueConstraintKey = getUniqueConstraintViolationColumn(error);
       if (uniqueConstraintKey) {
@@ -48,15 +73,19 @@ export class UserService {
     }
   }
 
-  public async updateById(
+  public async updateUserById(
     id: number,
     UpdateUserInput: UpdateUserInput,
   ): Promise<User | undefined> {
-    await this.userRepository.update(id, UpdateUserInput);
+    await this.userRepository.update(id, {
+      name: UpdateUserInput.name,
+      email: UpdateUserInput.email,
+      password: UpdateUserInput.password,
+    });
     return await this.userRepository.findOne({ where: { id } });
   }
 
-  async deleteByIds(ids: number[]): Promise<void> {
+  async deleteUsersByIds(ids: number[]): Promise<void> {
     await this.userRepository.delete(ids);
   }
 }

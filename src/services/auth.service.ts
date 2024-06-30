@@ -80,7 +80,11 @@ export class AuthService {
   }
 
   private generateAccessToken(user: User): string {
-    const payload: AuthJwtPayload = { id: user.id, email: user.email };
+    const payload: AuthJwtPayload = {
+      id: user.id,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    };
 
     return jwt.sign(payload, ACCESS_TOKEN_SECRET, {
       expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRE,

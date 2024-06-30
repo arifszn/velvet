@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { User } from '../entities/user.entity';
 import { Expose, plainToInstance } from 'class-transformer';
+import { BaseQueryInput } from './baseQuery.dto';
+import { UserStatus } from '../constants/userStatus.constant';
 
 export const CreateUserInput = z.object({
   name: z.string().max(100),
@@ -18,9 +20,15 @@ export const DeleteUsersInput = z.object({
   ids: z.array(z.number()),
 });
 
+export const QueryUsersInput = BaseQueryInput.extend({
+  status: z.nativeEnum(UserStatus).array().optional(),
+  sortBy: z.enum(['status', 'createdAt', 'name']).default('createdAt'),
+});
+
 export type CreateUserInput = z.infer<typeof CreateUserInput>;
 export type UpdateUserInput = z.infer<typeof UpdateUserInput>;
 export type DeleteUsersInput = z.infer<typeof DeleteUsersInput>;
+export type QueryUsersInput = z.infer<typeof QueryUsersInput>;
 
 export class UserOutput {
   @Expose()

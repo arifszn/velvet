@@ -26,7 +26,7 @@ export const authenticateUser = async (
   try {
     const payload = jwt.verify(token, ACCESS_TOKEN_SECRET) as AuthJwtPayload;
 
-    const user = await userService.getById(payload.id);
+    const user = await userService.getUserById(payload.id);
 
     if (!user) {
       return res.status(401).json({ message: ErrorMessages.UserNotFound });
