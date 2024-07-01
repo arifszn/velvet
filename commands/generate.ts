@@ -25,7 +25,7 @@ const command: GluegunCommand = {
     const name = strings.pascalCase(resourceName); // UserAccount
     const singularNameUpperCase = strings.singular(name);
     const pluralizeNameUpperCase = strings.pluralize(name);
-    const singularNameLowerCase = strings.camelCase(name);
+    const singularNameLowerCase = strings.camelCase(singularNameUpperCase);
     const pluralizeNameLowerCase = strings.camelCase(pluralizeNameUpperCase);
 
     // Prompt for file types to generate
@@ -59,7 +59,7 @@ const command: GluegunCommand = {
       const stubPath = path.join(stubDir, `${fileType}.ts.stub`);
       const outputPath = path.join(
         outputDir,
-        `${fileType}s`,
+        `${strings.pluralize(fileType)}`,
         `${singularNameLowerCase}.${fileType}.ts`,
       );
 

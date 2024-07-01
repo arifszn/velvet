@@ -15,7 +15,7 @@ export class Article {
   id: number;
 
   @Column()
-  example_column: string;
+  name: string;
 
   @ManyToOne(() => User, {
     eager: true,
