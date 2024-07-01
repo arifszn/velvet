@@ -75,13 +75,18 @@ export class UserService {
 
   public async updateUserById(
     id: number,
-    UpdateUserInput: UpdateUserInput,
+    updateUserInput: UpdateUserInput,
   ): Promise<User | undefined> {
-    await this.userRepository.update(id, {
-      name: UpdateUserInput.name,
-      email: UpdateUserInput.email,
-      password: UpdateUserInput.password,
-    });
+    await this.userRepository.update(
+      {
+        id,
+      },
+      {
+        name: updateUserInput.name,
+        email: updateUserInput.email,
+        password: updateUserInput.password,
+      },
+    );
     return await this.userRepository.findOne({ where: { id } });
   }
 

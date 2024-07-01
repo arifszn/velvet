@@ -21,10 +21,10 @@ app.use(
     origin: '*',
   }),
 );
-app.use('/api', routes);
 app.get('/', (req, res) => {
   res.json({ status: 'OK' });
 });
+app.use('/api', routes);
 
 setupDocRoutes(app);
 
