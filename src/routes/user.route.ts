@@ -25,19 +25,19 @@ userRouter.post(
 userRouter.get(
   '/:id(\\d+)/',
   authorizeAdmin,
-  userController.getUserById.bind(userController),
+  userController.getUser.bind(userController),
 );
 
 userRouter.patch(
   '/:id(\\d+)/',
   authorizeAdmin,
-  userController.updateUserById.bind(userController),
+  userController.updateUser.bind(userController),
 );
 
 userRouter.delete(
   '/:id(\\d+)/',
   authorizeAdmin,
-  userController.deleteUserById.bind(userController),
+  userController.deleteUser.bind(userController),
 );
 
 export default userRouter;

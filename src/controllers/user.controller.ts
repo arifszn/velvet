@@ -74,12 +74,12 @@ export class UserController {
     }
   }
 
-  public async getUserById(req: AuthRequest, res: Response): Promise<void> {
+  public async getUser(req: AuthRequest, res: Response): Promise<void> {
     try {
       const id = Number(req.params.id);
       const user = await this.userService.getUserById(id);
       if (!user) {
-        res.status(404).json({ message: ErrorMessages.UserNotFound });
+        res.status(404).json({ message: ErrorMessages.ResourceNotFound });
       }
 
       res.status(200).json(UserOutput.fromEntity(user));
@@ -114,13 +114,13 @@ export class UserController {
     }
   }
 
-  public async updateUserById(req: AuthRequest, res: Response): Promise<void> {
+  public async updateUser(req: AuthRequest, res: Response): Promise<void> {
     try {
       const id = Number(req.params.id);
       const updateUserInput = UpdateUserInput.parse(req.body);
       const user = await this.userService.updateUserById(id, updateUserInput);
       if (!user) {
-        res.status(404).json({ message: ErrorMessages.UserNotFound });
+        res.status(404).json({ message: ErrorMessages.ResourceNotFound });
         return;
       }
       res.status(200).json(UserOutput.fromEntity(user));
@@ -143,13 +143,13 @@ export class UserController {
     }
   }
 
-  public async deleteUserById(req: AuthRequest, res: Response): Promise<void> {
+  public async deleteUser(req: AuthRequest, res: Response): Promise<void> {
     try {
       const id = Number(req.params.id);
       const user = await this.userService.getUserById(id);
 
       if (!user) {
-        res.status(404).json({ message: ErrorMessages.UserNotFound });
+        res.status(404).json({ message: ErrorMessages.ResourceNotFound });
         return;
       }
 

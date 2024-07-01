@@ -12,5 +12,6 @@ export enum ErrorMessages {
   InvalidAccessToken = 'Invalid access token',
   InvalidOrMissingAccessToken = 'Access token is missing or invalid',
   UserNotFound = 'User not found',
+  ResourceNotFound = 'Resource not found',
   UserInactive = 'User is not active',
 }

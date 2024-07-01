@@ -16,10 +16,6 @@ export const UpdateUserInput = z.object({
   password: z.string().max(255).optional(),
 });
 
-export const DeleteUsersInput = z.object({
-  ids: z.array(z.number()),
-});
-
 export const QueryUsersInput = BaseQueryInput.extend({
   status: z.nativeEnum(UserStatus).array().optional(),
   sortBy: z.enum(['status', 'createdAt', 'name']).default('createdAt'),
@@ -27,7 +23,6 @@ export const QueryUsersInput = BaseQueryInput.extend({
 
 export type CreateUserInput = z.infer<typeof CreateUserInput>;
 export type UpdateUserInput = z.infer<typeof UpdateUserInput>;
-export type DeleteUsersInput = z.infer<typeof DeleteUsersInput>;
 export type QueryUsersInput = z.infer<typeof QueryUsersInput>;
 
 export class UserOutput {
@@ -39,6 +34,9 @@ export class UserOutput {
 
   @Expose()
   email: string;
+
+  @Expose({ name: 'created_at' })
+  created_at: Date;
 
   static fromEntity(user: User): UserOutput {
     return plainToInstance(UserOutput, user, {
