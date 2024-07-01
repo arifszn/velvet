@@ -1,7 +1,7 @@
 {
   "name": "velvet",
   "version": "1.0.0",
-  "description": "",
+  "description": "REST API Starter Kit/Boilerplate powered by Node.js, Express.js, and TypeORM",
   "scripts": {
     "build": "tsc",
     "start:dev": "ts-node-dev src/index.ts",
@@ -64,5 +64,14 @@
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
-  }
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "typeorm",
+    "rest-api",
+    "starter-kit",
+    "boilerplate",
+    "typescript"
+  ]
 }
