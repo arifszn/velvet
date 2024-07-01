@@ -38,8 +38,8 @@ const command: GluegunCommand = {
         'repository',
         'service',
         'controller',
-        'routes',
-        'DTO',
+        'route',
+        'dto',
       ],
       required: true,
     });
@@ -85,7 +85,7 @@ const command: GluegunCommand = {
       execSync(`npm run lint:fix:file -- -- ${filesToLint}`, {
         stdio: 'inherit',
       });
-      success('Linting and fixing completed successfully');
+      success('Running lint fix on generated files...');
     } catch (error) {
       error('Error running lint:fix');
       console.error(error);

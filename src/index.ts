@@ -65,3 +65,5 @@ async function shutdown() {
 }
 
 startServer();
+
+export default app;

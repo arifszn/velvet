@@ -4,17 +4,15 @@ import { BaseQueryInput } from './baseQuery.dto';
 import { Article } from '../entities/article.entity';
 
 export const CreateArticleInput = z.object({
-  title: z.string().max(255),
-  body: z.string(),
+  name: z.string(),
 });
 
 export const UpdateArticleInput = z.object({
-  title: z.string().max(255).optional(),
-  body: z.string().optional(),
+  name: z.string().optional(),
 });
 
 export const QueryArticlesInput = BaseQueryInput.extend({
-  sortBy: z.enum(['createdAt', 'title']).default('createdAt'),
+  sortBy: z.enum(['createdAt']).default('createdAt'),
 });
 
 export type CreateArticleInput = z.infer<typeof CreateArticleInput>;
@@ -26,10 +24,7 @@ export class ArticleOutput {
   id: number;
 
   @Expose()
-  title: string;
-
-  @Expose()
-  body: string;
+  name: string;
 
   @Expose({ name: 'created_at' })
   created_at: Date;
