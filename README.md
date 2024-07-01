@@ -5,24 +5,12 @@
   <h4 align="center">📦 REST API Starter Kit/Boilerplate powered by Node.js, Express.js, and TypeORM.</h4>
 
   <p align="center">
-    <a href="https://github.com/arifszn/velvet/actions/workflows/test.yml">
-      <img src="https://github.com/arifszn/velvet/actions/workflows/test.yml/badge.svg"/>
-    </a>
-    <a href="https://github.com/arifszn/velvet/issues">
-      <img src="https://img.shields.io/github/issues/arifszn/velvet"/>
-    </a>
-    <a href="https://github.com/arifszn/velvet/stargazers">
-      <img src="https://img.shields.io/github/stars/arifszn/velvet"/>
-    </a>
-    <a href="https://github.com/arifszn/velvet/blob/main/CONTRIBUTING.md">
-      <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"/>
-    </a>
-    <a href="https://github.com/arifszn/velvet/blob/main/LICENSE">
-      <img src="https://img.shields.io/github/license/arifszn/velvet"/>
-    </a>
-    <a href="https://twitter.com/intent/tweet?url=https://github.com/arifszn/velvet&hashtags=node,opensource,express,typescript,api">
-      <img src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Farifszn%2Fvelvet"/>
-    </a>
+    <a href="https://github.com/arifszn/velvet/actions/workflows/test.yml"><img src="https://github.com/arifszn/velvet/actions/workflows/test.yml/badge.svg"/></a>
+    <a href="https://github.com/arifszn/velvet/issues"><img src="https://img.shields.io/github/issues/arifszn/velvet"/></a>
+    <a href="https://github.com/arifszn/velvet/stargazers"><img src="https://img.shields.io/github/stars/arifszn/velvet"/></a>
+    <a href="https://github.com/arifszn/velvet/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"/></a>
+    <a href="https://github.com/arifszn/velvet/blob/main/LICENSE"><img src="https://img.shields.io/github/license/arifszn/velvet"/></a>
+    <a href="https://twitter.com/intent/tweet?url=https://github.com/arifszn/velvet&hashtags=node,opensource,express,typescript,api"><img src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Farifszn%2Fvelvet"/></a>
   </p>
 
   <p align="center">
@@ -38,19 +26,13 @@
 
 ## Features
 
-- Dockerized Environment: Easily set up and manage your development environment using Docker.
-
-- CLI for Resource Generation: Quickly generate resource files (controller, service, repository, DTO, entity, and route) using the CLI tool.
-
-- Service Repository Pattern: Maintain a clean and modular codebase with a well-structured service repository pattern.
-
-- Zod Validation: Ensure data integrity with schema-based validation using Zod.
-
-- Class Transformer Output DTOs: Clean and transform your data with Class Transformer.
-
-- Swagger UI and Redoc UI: Automatically generate and visualize your API documentation.
-
-- ESLint and Prettier: Enforce coding standards and ensure a consistent code style.
+- **Dockerized Environment:** Easily set up and manage your development environment using Docker.
+- **CLI for Resource Generation:** Quickly generate resource files (controller, service, repository, DTO, entity, and route) using the CLI tool.
+- **Service Repository Pattern:** Maintain a clean and modular codebase with a well-structured service repository pattern.
+- **Zod Validation:** Ensure data integrity with schema-based validation using Zod.
+- **Class Transformer DTOs:** Clean and transform your data with Class Transformer.
+- **Swagger UI and Redoc UI:** Automatically generate and visualize your API documentation.
+- **ESLint and Prettier:** Enforce coding standards and ensure a consistent code style.
 
 ## Getting Started
 
@@ -134,6 +116,8 @@ This will generate the following files:
 
 The generated files will be pre-configured and ready for use, allowing you to focus on implementing your business logic.
 
+Remember to create a migration for the new entity and add the route to the index route (src/routes/index.ts).
+
 ## API Documentation
 
 This starter kit comes with integrated API documentation tools. You can access the Swagger UI and Redoc UI for your API documentation.
@@ -183,7 +167,3 @@ To contribute, see the [contributing guide](https://github.com/arifszn/velvet/bl
 ## License
 
 [MIT License](https://github.com/arifszn/velvet/blob/main/LICENSE)
-
-```
-
-```
