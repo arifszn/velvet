@@ -28,7 +28,7 @@
   "homepage": "https://github.com/arifszn/velvet#readme",
   "dependencies": {
     "@langchain/anthropic": "^0.1.21",
-    "@langchain/community": "^0.2.2",
+    "@langchain/community": "^0.2.16",
     "@langchain/google-genai": "^0.0.16",
     "@langchain/openai": "^0.0.33",
     "bcryptjs": "^2.4.3",
