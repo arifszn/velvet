@@ -127,6 +127,8 @@ This starter kit comes with integrated API documentation tools. You can access t
 - Swagger UI: [`http://localhost:3000/swagger`](http://localhost:3000/swagger)
 - Redoc UI: [`http://localhost:3000/redoc`](http://localhost:3000/redoc)
 
+You can also access the online API documentation [here](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/arifszn/velvet/main/src/api-docs.json).
+
 ## Folder Structure
 
 The project follows a modular folder structure:
