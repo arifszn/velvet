@@ -153,6 +153,10 @@ tsconfig.json            # TypeScript configuration
 .prettierrc              # Prettier configuration
 ```
 
+## Admin Routes
+
+To access the admin routes, the authenticated user's `isAdmin` column must be set to `true` in the database. You can update the `isAdmin` field using Adminer, a database management tool accessible at [`http://localhost:8080`](http://localhost:8080).
+
 ## Support
 
 <p>You can show your support by starring this project.</p>
