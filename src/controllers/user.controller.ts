@@ -10,6 +10,7 @@ import { AuthRequest } from '../interfaces/authRequest.interface';
 import { z } from 'zod';
 import { ErrorMessages } from '../constants/message.constant';
 import { UniqueConstraintViolationException } from '../exceptions/UniqueConstraintViolationException';
+import logger from '../utils/logger.utils';
 
 export class UserController {
   private readonly userService: UserService;
@@ -28,7 +29,7 @@ export class UserController {
       }
       res.status(200).json(UserOutput.fromEntity(user));
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       res
         .status(500)
         .json({ message: error?.message || 'Internal Server Error' });
@@ -66,7 +67,7 @@ export class UserController {
           errors: error.errors,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });
@@ -84,7 +85,7 @@ export class UserController {
 
       res.status(200).json(UserOutput.fromEntity(user));
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       res
         .status(500)
         .json({ message: error?.message || ErrorMessages.InternalServerError });
@@ -106,7 +107,7 @@ export class UserController {
           message: error?.message,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });
@@ -125,7 +126,6 @@ export class UserController {
       }
       res.status(200).json(UserOutput.fromEntity(user));
     } catch (error) {
-      console.error(error);
       if (error instanceof z.ZodError) {
         res.status(400).json({
           errors: error.errors,
@@ -135,7 +135,7 @@ export class UserController {
           message: error?.message,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });
@@ -156,13 +156,12 @@ export class UserController {
       await this.userService.deleteUsersByIds([id]);
       res.status(204).send();
     } catch (error) {
-      console.error(error);
       if (error instanceof z.ZodError) {
         res.status(400).json({
           errors: error.errors,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });

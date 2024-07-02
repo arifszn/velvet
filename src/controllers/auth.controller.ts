@@ -11,6 +11,7 @@ import {
 import { AuthService } from '../services/auth.service';
 import { UnauthorizedException } from '../exceptions/UnauthorizedException';
 import { ErrorMessages } from '../constants/message.constant';
+import logger from '../utils/logger.utils';
 
 export class AuthController {
   private readonly authService: AuthService;
@@ -41,7 +42,7 @@ export class AuthController {
           message: error?.message,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });
@@ -71,7 +72,7 @@ export class AuthController {
           message: error?.message || ErrorMessages.Unauthorized,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });
@@ -100,7 +101,7 @@ export class AuthController {
           message: error?.message || ErrorMessages.Unauthorized,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });

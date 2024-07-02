@@ -33,6 +33,8 @@
 - **Class Transformer DTOs:** Clean and transform your data with Class Transformer.
 - **Swagger UI and Redoc UI:** Automatically generate and visualize your API documentation.
 - **ESLint and Prettier:** Enforce coding standards and ensure a consistent code style.
+- **Winston Logging:** Centralized and customizable logging using Winston.
+- **GitHub Actions:** CI/CD workflows for testing and linting.
 
 ## Getting Started
 

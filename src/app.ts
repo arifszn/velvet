@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, { Express } from 'express';
+import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import routes from './routes';
 import helmet from 'helmet';
@@ -8,6 +8,7 @@ import AppDataSource from './configs/dataSource';
 import { bootstrapCronJob } from './utils/cronJob.utils';
 import { setupDocRoutes } from './routes/doc.route';
 import { CSP_CONFIG } from './constants/CSP.constant';
+import logger from './utils/logger.utils';
 
 dotenv.config();
 
@@ -21,19 +22,26 @@ app.use(
     origin: '*',
   }),
 );
-app.get('/', (req, res) => {
+app.get('/', (_, res: Response) => {
   res.json({ status: 'OK' });
 });
 app.use('/api', routes);
 
 setupDocRoutes(app);
 
+app.use((err: Error, req: Request, res: Response) => {
+  logger.error(
+    `${res.statusCode || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`,
+  );
+  res.status(500).send('Server Error');
+});
+
 async function startServer() {
   try {
     await AppDataSource.initialize();
-    console.log('Data Source has been initialized!');
+    logger.info('Data Source has been initialized!');
   } catch (err) {
-    console.error('Error during Data Source initialization', err);
+    logger.error('Error during Data Source initialization', err);
     process.exit(1);
   }
 
@@ -42,24 +50,24 @@ async function startServer() {
 
     // Start the Express server
     app.listen(port, () => {
-      console.log(`[server]: Server is running on port ${port}`);
+      logger.info(`[server]: Server is running on port ${port}`);
     });
 
     process.on('SIGINT', shutdown);
     process.on('SIGTERM', shutdown);
   } catch (error) {
-    console.error('[server]: Error starting server:', error);
+    logger.error('[server]: Error starting server:', error);
     process.exit(1);
   }
 }
 
 async function shutdown() {
   try {
-    console.log('[server]: Shutting down gracefully...');
-    console.log('[server]: Server has shut down.');
+    logger.info('[server]: Shutting down gracefully...');
+    logger.info('[server]: Server has shut down.');
     process.exit(0);
   } catch (error) {
-    console.error('[server]: Error during shutdown:', error);
+    logger.error('[server]: Error during shutdown:', error);
     process.exit(1);
   }
 }

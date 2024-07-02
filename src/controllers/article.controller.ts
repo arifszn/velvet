@@ -9,6 +9,7 @@ import { AuthRequest } from '../interfaces/authRequest.interface';
 import { ArticleService } from '../services/article.service';
 import { ErrorMessages } from '../constants/message.constant';
 import { z } from 'zod';
+import logger from '../utils/logger.utils';
 
 export class ArticleController {
   private readonly articleService: ArticleService;
@@ -49,7 +50,7 @@ export class ArticleController {
           errors: error.errors,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });
@@ -72,7 +73,7 @@ export class ArticleController {
 
       res.status(200).json(ArticleOutput.fromEntity(article));
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       res
         .status(500)
         .json({ message: error?.message || ErrorMessages.InternalServerError });
@@ -95,7 +96,7 @@ export class ArticleController {
           errors: error.errors,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });
@@ -119,13 +120,13 @@ export class ArticleController {
       }
       res.status(200).json(ArticleOutput.fromEntity(article));
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       if (error instanceof z.ZodError) {
         res.status(400).json({
           errors: error.errors,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });
@@ -150,13 +151,12 @@ export class ArticleController {
       await this.articleService.deleteArticlesByIdsAndUserId([id], userId);
       res.status(204).send();
     } catch (error) {
-      console.error(error);
       if (error instanceof z.ZodError) {
         res.status(400).json({
           errors: error.errors,
         });
       } else {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({
           message: error?.message || ErrorMessages.InternalServerError,
         });
