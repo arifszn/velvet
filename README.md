@@ -22,18 +22,20 @@
   </p>
 </p>
 
-**Velvet** is a modern, customized, minimal API starter kit to kickstart your next _REST_ API backend. This project provides a robust foundation for building modern, scalable, and maintainable web applications using Node.js, Express, TypeScript, and various other tools and libraries.
+**Velvet** is a modern, customized, minimal API starter kit to kickstart your next REST API backend. This project provides a robust foundation for building modern, scalable, and maintainable web applications using Node.js, Express, TypeScript, and various other tools and libraries.
 
 ## Features
 
 - **Dockerized Environment:** Easily set up and manage your development environment using Docker.
 - **CLI for Resource Generation:** Quickly generate resource files (controller, service, repository, DTO, entity, and route) using the CLI tool.
 - **Service Repository Pattern:** Maintain a clean and modular codebase with a well-structured service repository pattern.
+- **Authentication and Authorization:** Secure your API with JWT-based authentication and role-based access control.
 - **Zod Validation:** Ensure data integrity with schema-based validation using Zod.
 - **Class Transformer DTOs:** Clean and transform your data with Class Transformer.
 - **Swagger UI and Redoc UI:** Automatically generate and visualize your API documentation.
 - **ESLint and Prettier:** Enforce coding standards and ensure a consistent code style.
 - **Winston Logging:** Centralized and customizable logging using Winston.
+- **Advanced searching:** Searching capabilities with sorting, filtering, and keyword search.
 - **GitHub Actions:** CI/CD workflows for testing and linting.
 
 ## Getting Started
@@ -68,7 +70,7 @@ To run the migrations, you can use the following commands inside the Docker cont
 npm run migration:generate --name=CreateUsers
 ```
 
-Replace `CreateUsers` with name of the migration.
+Replace _`CreateUsers`_ with name of the migration.
 
 #### Run Migration
 
