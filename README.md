@@ -39,7 +39,7 @@
 - **Authentication and Authorization:** Secure your API with JWT-based authentication and role-based access control.
 - **Zod Validation:** Ensure data integrity with schema-based validation using Zod.
 - **Class Transformer DTOs:** Clean and transform your data with Class Transformer.
-- **Swagger UI and Redoc UI:** Automatically generate and visualize your API documentation.
+- **Swagger UI and Redoc UI:** Generate and visualize your API documentation.
 - **ESLint and Prettier:** Enforce coding standards and ensure a consistent code style.
 - **Winston Logging:** Centralized and customizable logging using Winston.
 - **Advanced searching:** Searching capabilities with sorting, filtering, and keyword search.
