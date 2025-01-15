@@ -1,16 +1,16 @@
 import { Response } from 'express';
-import { UserService } from '../services/user.service';
+import { UserService } from '@/services/user.service';
 import {
   CreateUserInput,
   QueryUsersInput,
   UpdateUserInput,
   UserOutput,
-} from '../dtos/user.dto';
-import { AuthRequest } from '../interfaces/authRequest.interface';
+} from '@/dtos/user.dto';
+import { AuthRequest } from '@/interfaces/authRequest.interface';
 import { z } from 'zod';
-import { ErrorMessages } from '../constants/message.constant';
-import { UniqueConstraintViolationException } from '../exceptions/UniqueConstraintViolationException';
-import logger from '../utils/logger.utils';
+import { ErrorMessages } from '@/constants/message.constant';
+import { UniqueConstraintViolationException } from '@/exceptions/UniqueConstraintViolationException';
+import logger from '@/utils/logger.utils';
 
 export class UserController {
   private readonly userService: UserService;

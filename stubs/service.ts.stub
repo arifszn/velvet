@@ -1,7 +1,7 @@
 import { In } from 'typeorm';
-import { CreateArticleInput, UpdateArticleInput } from '../dtos/article.dto';
-import { Article } from '../entities/article.entity';
-import { ArticleRepository } from '../repositories/article.repository';
+import { CreateArticleInput, UpdateArticleInput } from '@/dtos/article.dto';
+import { Article } from '@/entities/article.entity';
+import { ArticleRepository } from '@/repositories/article.repository';
 
 export class ArticleService {
   private readonly articleRepository: ArticleRepository;

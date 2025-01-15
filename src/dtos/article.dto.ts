@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { Expose, plainToInstance } from 'class-transformer';
-import { BaseQueryInput } from './baseQuery.dto';
-import { Article } from '../entities/article.entity';
+import { BaseQueryInput } from '@/dtos/baseQuery.dto';
+import { Article } from '@/entities/article.entity';
 
 export const CreateArticleInput = z.object({
   title: z.string().max(255),

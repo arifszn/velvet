@@ -1,6 +1,6 @@
 import { Express } from 'express';
 import swaggerUi from 'swagger-ui-express';
-import apiDocs from '../api-docs.json';
+import apiDocs from '@/api-docs.json';
 import path from 'path';
 
 export function setupDocRoutes(app: Express) {

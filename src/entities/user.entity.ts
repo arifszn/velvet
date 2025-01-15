@@ -7,9 +7,9 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserStatus } from '../constants/userStatus.constant';
+import { UserStatus } from '@/constants/userStatus.constant';
 import { compare, hash } from 'bcryptjs';
-import { UNIQUE_CONSTRAINT } from '../constants/uniqueConstraint.constant';
+import { UNIQUE_CONSTRAINT } from '@/constants/uniqueConstraint.constant';
 
 @Entity('users')
 @Unique(UNIQUE_CONSTRAINT.USERS_EMAIL.indexName, [

@@ -13,6 +13,9 @@
     "baseUrl": "./",
     "incremental": true,
     "lib": ["es5", "es6", "dom"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@/*": ["src/*"]
+    }
   }
 }

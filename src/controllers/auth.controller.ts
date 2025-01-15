@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
-import { UniqueConstraintViolationException } from '../exceptions/UniqueConstraintViolationException';
+import { UniqueConstraintViolationException } from '@/exceptions/UniqueConstraintViolationException';
 import {
   AccessTokenOutput,
   AuthTokenOutput,
   LoginInput,
   RefreshTokenInput,
   RegisterInput,
-} from '../dtos/auth.dto';
-import { AuthService } from '../services/auth.service';
-import { UnauthorizedException } from '../exceptions/UnauthorizedException';
-import { ErrorMessages } from '../constants/message.constant';
-import logger from '../utils/logger.utils';
+} from '@/dtos/auth.dto';
+import { AuthService } from '@/services/auth.service';
+import { UnauthorizedException } from '@/exceptions/UnauthorizedException';
+import { ErrorMessages } from '@/constants/message.constant';
+import logger from '@/utils/logger.utils';
 
 export class AuthController {
   private readonly authService: AuthService;

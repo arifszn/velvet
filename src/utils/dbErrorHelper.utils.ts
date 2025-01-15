@@ -1,5 +1,5 @@
 import { QueryFailedError } from 'typeorm';
-import { UNIQUE_CONSTRAINT } from '../constants/uniqueConstraint.constant';
+import { UNIQUE_CONSTRAINT } from '@/constants/uniqueConstraint.constant';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getUniqueConstraintViolationColumn(error: any): string | null {
