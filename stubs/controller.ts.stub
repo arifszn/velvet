@@ -4,12 +4,12 @@ import {
   CreateArticleInput,
   QueryArticlesInput,
   UpdateArticleInput,
-} from '../dtos/article.dto';
-import { AuthRequest } from '../interfaces/authRequest.interface';
-import { ArticleService } from '../services/article.service';
-import { ErrorMessages } from '../constants/message.constant';
+} from '@/dtos/article.dto';
+import { AuthRequest } from '@/interfaces/authRequest.interface';
+import { ArticleService } from '@/services/article.service';
+import { ErrorMessages } from '@/constants/message.constant';
 import { z } from 'zod';
-import logger from '../utils/logger.utils';
+import logger from '@/utils/logger.utils';
 
 export class ArticleController {
   private readonly articleService: ArticleService;

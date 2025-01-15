@@ -1,4 +1,4 @@
-import { ErrorMessages } from '../constants/message.constant';
+import { ErrorMessages } from '@/constants/message.constant';
 
 export class UniqueConstraintViolationException extends Error {
   constructor(message: string = ErrorMessages.Conflict) {

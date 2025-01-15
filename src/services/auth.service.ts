@@ -1,17 +1,17 @@
-import { User } from '../entities/user.entity';
-import { UserRepository } from '../repositories/user.repository';
-import { getUniqueConstraintViolationColumn } from '../utils/dbErrorHelper.utils';
-import { UniqueConstraintViolationException } from '../exceptions/UniqueConstraintViolationException';
-import { LoginInput, RefreshTokenInput, RegisterInput } from '../dtos/auth.dto';
+import { User } from '@/entities/user.entity';
+import { UserRepository } from '@/repositories/user.repository';
+import { getUniqueConstraintViolationColumn } from '@/utils/dbErrorHelper.utils';
+import { UniqueConstraintViolationException } from '@/exceptions/UniqueConstraintViolationException';
+import { LoginInput, RefreshTokenInput, RegisterInput } from '@/dtos/auth.dto';
 import jwt from 'jsonwebtoken';
-import { UnauthorizedException } from '../exceptions/UnauthorizedException';
-import { UserStatus } from '../constants/userStatus.constant';
+import { UnauthorizedException } from '@/exceptions/UnauthorizedException';
+import { UserStatus } from '@/constants/userStatus.constant';
 import {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
-} from '../constants/jwt.constant';
-import { AuthJwtPayload } from '../interfaces/authJwtPayload.interface';
-import { ErrorMessages } from '../constants/message.constant';
+} from '@/constants/jwt.constant';
+import { AuthJwtPayload } from '@/interfaces/authJwtPayload.interface';
+import { ErrorMessages } from '@/constants/message.constant';
 
 export class AuthService {
   private readonly userRepository: UserRepository;
