@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, { Express, Request, Response } from 'express';
+import express, { Express, Response } from 'express';
 import dotenv from 'dotenv';
 import routes from '@/routes';
 import helmet from 'helmet';
@@ -28,13 +28,6 @@ app.get('/', (_, res: Response) => {
 app.use('/api', routes);
 
 setupDocRoutes(app);
-
-app.use((err: Error, req: Request, res: Response) => {
-  logger.error(
-    `${res.statusCode || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`,
-  );
-  res.status(500).send('Server Error');
-});
 
 async function startServer() {
   try {
