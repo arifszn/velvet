@@ -1,5 +1,5 @@
 import { DataSource, Repository } from 'typeorm';
-import dataSource from '@/configs/dataSource';
+import dataSource from '@/configs/dataSource.config';
 import { Article } from '@/entities/article.entity';
 
 export class ArticleRepository extends Repository<Article> {
