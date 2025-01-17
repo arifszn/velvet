@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import { z } from 'zod';
-import { UniqueConstraintViolationException } from '@/exceptions/uniqueConstraintViolation.exception';
 import {
   AccessTokenOutput,
   AuthTokenOutput,
@@ -9,14 +7,13 @@ import {
   RegisterInput,
 } from '@/dtos/auth.dto';
 import { AuthService } from '@/services/auth.service';
-import { UnauthorizedException } from '@/exceptions/unauthorized.exception';
-import { ErrorMessages } from '@/enums/message.enum';
-import logger from '@/utils/logger.utils';
+import { BaseController } from '@/controllers/base.controller';
 
-export class AuthController {
+export class AuthController extends BaseController {
   private readonly authService: AuthService;
 
   constructor() {
+    super();
     this.authService = new AuthService();
   }
 
@@ -33,20 +30,7 @@ export class AuthController {
         }),
       );
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else if (error instanceof UniqueConstraintViolationException) {
-        res.status(409).json({
-          message: error?.message,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 
@@ -63,20 +47,7 @@ export class AuthController {
         }),
       );
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else if (error instanceof UnauthorizedException) {
-        res.status(401).json({
-          message: error?.message || ErrorMessages.Unauthorized,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 
@@ -92,20 +63,7 @@ export class AuthController {
         }),
       );
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else if (error instanceof UnauthorizedException) {
-        res.status(401).json({
-          message: error?.message || ErrorMessages.Unauthorized,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 }

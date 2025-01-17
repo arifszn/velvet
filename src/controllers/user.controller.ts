@@ -7,15 +7,14 @@ import {
   UserOutput,
 } from '@/dtos/user.dto';
 import { AuthRequest } from '@/interfaces/authRequest.interface';
-import { z } from 'zod';
 import { ErrorMessages } from '@/enums/message.enum';
-import { UniqueConstraintViolationException } from '@/exceptions/uniqueConstraintViolation.exception';
-import logger from '@/utils/logger.utils';
+import { BaseController } from '@/controllers/base.controller';
 
-export class UserController {
+export class UserController extends BaseController {
   private readonly userService: UserService;
 
   constructor() {
+    super();
     this.userService = new UserService();
   }
 
@@ -24,15 +23,12 @@ export class UserController {
       const user = await this.userService.getUserById(req.user.id);
 
       if (!user) {
-        res.status(404).json({ message: 'User not found' });
+        res.status(404).json({ message: ErrorMessages.UserNotFound });
         return;
       }
       res.status(200).json(UserOutput.fromEntity(user));
     } catch (error) {
-      logger.error(error);
-      res
-        .status(500)
-        .json({ message: error?.message || 'Internal Server Error' });
+      this.handleError(res, error);
     }
   }
 
@@ -62,16 +58,7 @@ export class UserController {
         .status(200)
         .json({ data: UserOutput.fromEntities(users), meta: { count } });
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 
@@ -80,15 +67,13 @@ export class UserController {
       const id = Number(req.params.id);
       const user = await this.userService.getUserById(id);
       if (!user) {
-        res.status(404).json({ message: ErrorMessages.ResourceNotFound });
+        res.status(404).json({ message: ErrorMessages.UserNotFound });
+        return;
       }
 
       res.status(200).json(UserOutput.fromEntity(user));
     } catch (error) {
-      logger.error(error);
-      res
-        .status(500)
-        .json({ message: error?.message || ErrorMessages.InternalServerError });
+      this.handleError(res, error);
     }
   }
 
@@ -98,20 +83,7 @@ export class UserController {
       const user = await this.userService.createUser(createUserInput);
       res.status(201).json(UserOutput.fromEntity(user));
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else if (error instanceof UniqueConstraintViolationException) {
-        res.status(409).json({
-          message: error?.message,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 
@@ -126,20 +98,7 @@ export class UserController {
       }
       res.status(200).json(UserOutput.fromEntity(user));
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else if (error instanceof UniqueConstraintViolationException) {
-        res.status(409).json({
-          message: error?.message,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 
@@ -149,23 +108,14 @@ export class UserController {
       const user = await this.userService.getUserById(id);
 
       if (!user) {
-        res.status(404).json({ message: ErrorMessages.ResourceNotFound });
+        res.status(404).json({ message: ErrorMessages.UserNotFound });
         return;
       }
 
       await this.userService.deleteUsersByIds([id]);
       res.status(204).send();
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 }

@@ -8,13 +8,13 @@ import {
 import { AuthRequest } from '@/interfaces/authRequest.interface';
 import { ArticleService } from '@/services/article.service';
 import { ErrorMessages } from '@/enums/message.enum';
-import { z } from 'zod';
-import logger from '@/utils/logger.utils';
+import { BaseController } from '@/controllers/base.controller';
 
-export class ArticleController {
+export class ArticleController extends BaseController {
   private readonly articleService: ArticleService;
 
   constructor() {
+    super();
     this.articleService = new ArticleService();
   }
 
@@ -45,16 +45,7 @@ export class ArticleController {
         .status(200)
         .json({ data: ArticleOutput.fromEntities(articles), meta: { count } });
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 
@@ -69,14 +60,12 @@ export class ArticleController {
       );
       if (!article) {
         res.status(404).json({ message: ErrorMessages.ResourceNotFound });
+        return;
       }
 
       res.status(200).json(ArticleOutput.fromEntity(article));
     } catch (error) {
-      logger.error(error);
-      res
-        .status(500)
-        .json({ message: error?.message || ErrorMessages.InternalServerError });
+      this.handleError(res, error);
     }
   }
 
@@ -91,16 +80,7 @@ export class ArticleController {
       );
       res.status(201).json(ArticleOutput.fromEntity(article));
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 
@@ -109,6 +89,7 @@ export class ArticleController {
       const id = Number(req.params.id);
       const userId = req.user.id;
       const updateArticleInput = UpdateArticleInput.parse(req.body);
+
       const article = await this.articleService.updateArticleByIdAndUserId(
         id,
         userId,
@@ -118,18 +99,10 @@ export class ArticleController {
         res.status(404).json({ message: ErrorMessages.ResourceNotFound });
         return;
       }
+
       res.status(200).json(ArticleOutput.fromEntity(article));
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 
@@ -137,11 +110,11 @@ export class ArticleController {
     try {
       const id = Number(req.params.id);
       const userId = req.user.id;
+
       const article = await this.articleService.getArticleByIdAndUserId(
         id,
         userId,
       );
-
       if (!article) {
         res.status(404).json({ message: ErrorMessages.ResourceNotFound });
         return;
@@ -150,16 +123,7 @@ export class ArticleController {
       await this.articleService.deleteArticlesByIdsAndUserId([id], userId);
       res.status(204).send();
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        res.status(400).json({
-          errors: error.errors,
-        });
-      } else {
-        logger.error(error);
-        res.status(500).json({
-          message: error?.message || ErrorMessages.InternalServerError,
-        });
-      }
+      this.handleError(res, error);
     }
   }
 }
