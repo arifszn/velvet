@@ -28,7 +28,10 @@ export class ArticleService {
     queryBuilder.where('articles.userId = :userId', { userId });
 
     if (searchQuery) {
-      queryBuilder.andWhere('articles.example_column LIKE :searchQuery', {
+      queryBuilder.andWhere('articles.title LIKE :searchQuery', {
+        searchQuery: `%${searchQuery}%`,
+      });
+      queryBuilder.andWhere('articles.body LIKE :searchQuery', {
         searchQuery: `%${searchQuery}%`,
       });
     }
@@ -47,7 +50,7 @@ export class ArticleService {
     id: number,
     userId: number,
   ): Promise<Article | undefined> {
-    return await this.articleRepository.findOneBy({
+    return this.articleRepository.findOneBy({
       id,
       user: { id: userId },
     });
@@ -58,10 +61,11 @@ export class ArticleService {
     userId: number,
   ): Promise<Article> {
     const article = this.articleRepository.create({
-      name: createArticleInput.name,
+      title: createArticleInput.title,
+      body: createArticleInput.body,
       user: { id: userId },
     });
-    return await this.articleRepository.save(article);
+    return this.articleRepository.save(article);
   }
 
   public async updateArticleByIdAndUserId(
@@ -75,16 +79,17 @@ export class ArticleService {
         user: { id: userId },
       },
       {
-        name: updateArticleInput.name,
+        title: updateArticleInput.title,
+        body: updateArticleInput.body,
       },
     );
 
-    return await this.articleRepository.findOne({
+    return this.articleRepository.findOne({
       where: { id, user: { id: userId } },
     });
   }
 
-  async deleteArticlesByIdsAndUserId(
+  public async deleteArticlesByIdsAndUserId(
     ids: number[],
     userId: number,
   ): Promise<void> {

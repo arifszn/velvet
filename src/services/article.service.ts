@@ -50,7 +50,7 @@ export class ArticleService {
     id: number,
     userId: number,
   ): Promise<Article | undefined> {
-    return await this.articleRepository.findOneBy({
+    return this.articleRepository.findOneBy({
       id,
       user: { id: userId },
     });
@@ -65,7 +65,7 @@ export class ArticleService {
       body: createArticleInput.body,
       user: { id: userId },
     });
-    return await this.articleRepository.save(article);
+    return this.articleRepository.save(article);
   }
 
   public async updateArticleByIdAndUserId(
@@ -84,12 +84,12 @@ export class ArticleService {
       },
     );
 
-    return await this.articleRepository.findOne({
+    return this.articleRepository.findOne({
       where: { id, user: { id: userId } },
     });
   }
 
-  async deleteArticlesByIdsAndUserId(
+  public async deleteArticlesByIdsAndUserId(
     ids: number[],
     userId: number,
   ): Promise<void> {
