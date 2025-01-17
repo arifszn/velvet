@@ -8,8 +8,8 @@ import {
 } from '@/dtos/user.dto';
 import { AuthRequest } from '@/interfaces/authRequest.interface';
 import { z } from 'zod';
-import { ErrorMessages } from '@/constants/message.constant';
-import { UniqueConstraintViolationException } from '@/exceptions/UniqueConstraintViolationException';
+import { ErrorMessages } from '@/enums/message.enum';
+import { UniqueConstraintViolationException } from '@/exceptions/uniqueConstraintViolation.exception';
 import logger from '@/utils/logger.utils';
 
 export class UserController {

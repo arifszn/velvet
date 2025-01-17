@@ -1,7 +1,7 @@
 import { CreateUserInput, UpdateUserInput } from '@/dtos/user.dto';
 import { User } from '@/entities/user.entity';
 import { UserRepository } from '@/repositories/user.repository';
-import { UniqueConstraintViolationException } from '@/exceptions/UniqueConstraintViolationException';
+import { UniqueConstraintViolationException } from '@/exceptions/uniqueConstraintViolation.exception';
 import { getUniqueConstraintViolationColumn } from '@/utils/dbErrorHelper.utils';
 
 export class UserService {

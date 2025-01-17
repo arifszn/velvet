@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
-import { UniqueConstraintViolationException } from '@/exceptions/UniqueConstraintViolationException';
+import { UniqueConstraintViolationException } from '@/exceptions/uniqueConstraintViolation.exception';
 import {
   AccessTokenOutput,
   AuthTokenOutput,
@@ -9,8 +9,8 @@ import {
   RegisterInput,
 } from '@/dtos/auth.dto';
 import { AuthService } from '@/services/auth.service';
-import { UnauthorizedException } from '@/exceptions/UnauthorizedException';
-import { ErrorMessages } from '@/constants/message.constant';
+import { UnauthorizedException } from '@/exceptions/unauthorized.exception';
+import { ErrorMessages } from '@/enums/message.enum';
 import logger from '@/utils/logger.utils';
 
 export class AuthController {

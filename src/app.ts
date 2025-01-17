@@ -4,10 +4,10 @@ import dotenv from 'dotenv';
 import routes from '@/routes';
 import helmet from 'helmet';
 import cors from 'cors';
-import AppDataSource from '@/configs/dataSource';
+import AppDataSource from '@/configs/dataSource.config';
 import { bootstrapCronJob } from '@/utils/cronJob.utils';
 import { setupDocRoutes } from '@/routes/doc.route';
-import { CSP_CONFIG } from '@/constants/CSP.constant';
+import { CSP_CONFIG } from '@/constants/cspConfig.constant';
 import logger from '@/utils/logger.utils';
 
 dotenv.config();

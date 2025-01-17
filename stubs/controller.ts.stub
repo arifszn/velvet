@@ -7,7 +7,7 @@ import {
 } from '@/dtos/article.dto';
 import { AuthRequest } from '@/interfaces/authRequest.interface';
 import { ArticleService } from '@/services/article.service';
-import { ErrorMessages } from '@/constants/message.constant';
+import { ErrorMessages } from '@/enums/message.enum';
 import { z } from 'zod';
 import logger from '@/utils/logger.utils';
 

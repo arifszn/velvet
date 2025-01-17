@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { User } from '@/entities/user.entity';
 import { Expose, plainToInstance } from 'class-transformer';
 import { BaseQueryInput } from '@/dtos/baseQuery.dto';
-import { UserStatus } from '@/constants/userStatus.constant';
+import { UserStatus } from '@/enums/userStatus.enum';
 
 export const CreateUserInput = z.object({
   name: z.string().max(100),

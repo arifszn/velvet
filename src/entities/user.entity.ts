@@ -7,7 +7,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserStatus } from '@/constants/userStatus.constant';
+import { UserStatus } from '@/enums/userStatus.enum';
 import { compare, hash } from 'bcryptjs';
 import { UNIQUE_CONSTRAINT } from '@/constants/uniqueConstraint.constant';
 

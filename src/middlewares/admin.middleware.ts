@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import { AuthRequest } from '@/interfaces/authRequest.interface';
-import { ErrorMessages } from '@/constants/message.constant';
+import { ErrorMessages } from '@/enums/message.enum';
 
 export const authorizeAdmin = async (
   req: AuthRequest,
