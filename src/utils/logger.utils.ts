@@ -1,29 +1,23 @@
-import { createLogger, format, transports } from 'winston';
+import winston from 'winston';
 
 const logLevel = process.env.LOG_LEVEL || 'info';
 
-const logger = createLogger({
+// Create a logger instance
+const logger = winston.createLogger({
   level: logLevel,
-  format: format.combine(
-    format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss',
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    winston.format.errors({ stack: true }), // Add error stack trace formatting
+    winston.format.printf(({ timestamp, level, message, stack }) => {
+      // If there's a stack trace, append it to the log message
+      if (stack) {
+        return `[${timestamp}] ${level}: ${message}\n${stack}`;
+      }
+      return `[${timestamp}] ${level}: ${message}`;
     }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json(),
   ),
-  transports: [
-    new transports.Console({
-      format: format.combine(format.colorize(), format.simple()),
-    }),
-    /* new DailyRotateFile({
-      filename: 'logs/application-%DATE%.log',
-      datePattern: 'YYYY-MM-DD',
-      zippedArchive: true,
-      maxSize: '20m',
-      maxFiles: '14d',
-    }), */
-  ],
+  transports: [new winston.transports.Console()],
 });
 
 export default logger;
