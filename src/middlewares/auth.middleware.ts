@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { ACCESS_TOKEN_SECRET } from '@/constants/jwt.constant';
 import { AuthJwtPayload } from '@/interfaces/authJwtPayload.interface';
 import { AuthRequest } from '@/interfaces/authRequest.interface';
@@ -39,6 +39,12 @@ export const authenticateUser = async (
     req.user = user;
     next();
   } catch (err) {
-    return res.status(401).json({ message: ErrorMessages.InvalidAccessToken });
+    if (err instanceof JsonWebTokenError) {
+      return res
+        .status(401)
+        .json({ message: ErrorMessages.InvalidAccessToken });
+    }
+
+    return res.status(500).json({ message: ErrorMessages.InternalServerError });
   }
 };
