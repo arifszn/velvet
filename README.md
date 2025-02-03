@@ -22,7 +22,7 @@
   </p>
 </p>
 
-**Velvet** is a modern, customized, minimal API starter kit to kickstart your next REST API backend. This project provides a robust foundation for building modern, scalable, and maintainable web applications using Node.js, Express, TypeScript, and various other tools and libraries.
+**Velvet** is a modern, customized, minimal API starter kit with CLI to kickstart your next REST API backend. This project provides a robust foundation for building modern, scalable, and maintainable web applications using Node.js, Express, TypeScript, and various other tools and libraries.
 
 ## Features
 
