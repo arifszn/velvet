@@ -38,7 +38,7 @@
 - **Advanced searching:** Searching capabilities with sorting, filtering, and keyword search.
 - **GitHub Actions:** CI/CD workflows for testing and linting.
 
-<img alt="CLI Preview" src="https://github.com/user-attachments/assets/2d39d2fd-15b8-4bba-a5fc-8e726a6366de" width="70%">
+<img alt="CLI Preview" src="https://github.com/user-attachments/assets/8e33dc07-2859-47ad-a59c-ab776e191df4" width="70%">
 
 ## Getting Started
 
