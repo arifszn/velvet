@@ -9,7 +9,7 @@ services:
     command: npm run start:dev
     volumes:
       - ./:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
+      - /usr/src/app/node_modules
     depends_on:
       mysql:
         condition: service_healthy
@@ -45,6 +45,4 @@ services:
 
 volumes:
   mysql:
-    driver: local
-  node_modules:
     driver: local
