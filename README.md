@@ -1,6 +1,7 @@
 <br/>
 <p align="center">
-  <img src="https://github.com/arifszn/velvet/assets/45073703/4a1fcde5-d62f-40cd-8fba-bbf8a7d21902" width="35%">
+  <img src="https://github.com/user-attachments/assets/e7b06588-e1b5-40fa-9438-08faad424e54" width="5%">
+  <h1 align="center">Velvet</h1>
 
   <h4 align="center">📦 REST API Starter Kit/Boilerplate powered by Node.js, Express.js, and TypeORM.</h4>
 
